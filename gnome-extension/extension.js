@@ -9,8 +9,21 @@ import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const STATS_FILE = GLib.build_filenamev([GLib.get_home_dir(), '.gemini-burn', 'stats.json']);
-const REPO_DIR = '/home/andreporto/Documentos/GitHub/gemini-burn-widget';
+function _getRepoDir() {
+    const home = GLib.get_home_dir();
+    const candidates = [
+        GLib.build_filenamev([home, '.local', 'share', 'gemini-burn']),
+        GLib.build_filenamev([home, 'Documentos', 'GitHub', 'gemini-burn-widget']),
+        GLib.build_filenamev([home, 'Documents', 'GitHub', 'gemini-burn-widget'])
+    ];
+    for (const d of candidates) {
+        if (GLib.file_test(GLib.build_filenamev([d, 'main.py']), GLib.FileTest.EXISTS)) {
+            return d;
+        }
+    }
+    return candidates[0];
+}
+const REPO_DIR = _getRepoDir();
 
 const GeminiBurnIndicator = GObject.registerClass({
     GTypeName: 'GeminiBurnIndicator',

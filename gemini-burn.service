@@ -4,7 +4,7 @@ After=graphical-session.target network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/andreporto/Documentos/GitHub/gemini-burn-widget/main.py --web
+ExecStart=/usr/bin/python3 %h/.local/share/gemini-burn/main.py --web
 Restart=on-failure
 RestartSec=5s
 Environment="PYTHONUNBUFFERED=1"

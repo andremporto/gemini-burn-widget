@@ -250,35 +250,16 @@ def collect_metrics() -> Dict[str, Any]:
     except Exception:
         pass
 
-    # 3. Métricas de Hoje e da Semana
+    # 3. Métricas de Hoje
     today_key = now_local.strftime("%Y-%m-%d")
-    week_key = now_local.strftime("%Y-W%W")
-
     t_data = daily_map.get(today_key, {"reqs": 0, "tokens_in": 0, "tokens_out": 0})
-    w_data = weekly_map.get(week_key, {"reqs": 0, "tokens_in": 0, "tokens_out": 0})
 
     t_in = t_data["tokens_in"]
     t_out = t_data["tokens_out"]
     t_total = t_in + t_out
-
-    w_in = w_data["tokens_in"]
-    w_out = w_data["tokens_out"]
-    w_total = w_in + w_out
-
     daily_pct = min(100.0, round((t_data["reqs"] / max(1, daily_req_limit)) * 100, 1))
 
-    # Determina velocidade / ritmo de queima
-    if reqs_last_hour > 30:
-        pace_label = "Fervendo 🔥"
-        pace_class = "fire"
-    elif reqs_last_hour > 5:
-        pace_label = "Ativo ⚡"
-        pace_class = "active"
-    else:
-        pace_label = "Ocioso 💤"
-        pace_class = "idle"
-
-    # 4. Histórico dos últimos 7 dias (para mini-gráfico)
+    # 4. Histórico dos últimos 7 dias (para mini-gráfico e métrica da semana móvel)
     days_labels = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
     last_7_days = []
     for i in range(6, -1, -1):
@@ -295,6 +276,24 @@ def collect_metrics() -> Dict[str, Any]:
             "tokens_fmt": format_tokens(day_stat["tokens_in"] + day_stat["tokens_out"]),
             "is_today": is_today
         })
+
+    # Métricas da Semana (Soma dos últimos 7 dias para consistência visual com o histórico)
+    w_reqs = sum(day["reqs"] for day in last_7_days)
+    w_total = sum(day["tokens"] for day in last_7_days)
+
+    # Determina velocidade / ritmo e rótulo de queima em harmonia com as cores do widget
+    if daily_pct >= 70 or reqs_last_hour > 60:
+        pace_label = "Fervendo 🔥"
+        pace_class = "fire"
+    elif daily_pct >= 50 or reqs_last_hour > 25:
+        pace_label = "Acelerado ⚡"
+        pace_class = "active"
+    elif reqs_last_hour > 0:
+        pace_label = "Ativo ⚡"
+        pace_class = "active"
+    else:
+        pace_label = "Ocioso 💤"
+        pace_class = "idle"
 
     # Modelo dominante
     model_name = "Gemini 3.8 Flash"
@@ -318,7 +317,7 @@ def collect_metrics() -> Dict[str, Any]:
             "pct": daily_pct
         },
         "week": {
-            "reqs": w_data["reqs"],
+            "reqs": w_reqs,
             "total_tokens": w_total,
             "total_tokens_fmt": format_tokens(w_total)
         },
