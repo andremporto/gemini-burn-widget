@@ -24,6 +24,7 @@ function _getRepoDir() {
     return candidates[0];
 }
 const REPO_DIR = _getRepoDir();
+const STATS_FILE = GLib.build_filenamev([GLib.get_home_dir(), '.gemini-burn', 'stats.json']);
 
 const GeminiBurnIndicator = GObject.registerClass({
     GTypeName: 'GeminiBurnIndicator',
@@ -122,8 +123,11 @@ const GeminiBurnIndicator = GObject.registerClass({
 
     _loadStatsFromDisk() {
         try {
-            if (GLib.file_test(STATS_FILE, GLib.FileTest.EXISTS)) {
-                const [ok, contents] = GLib.file_get_contents(STATS_FILE);
+            const statsFile = (typeof STATS_FILE !== 'undefined')
+                ? STATS_FILE
+                : GLib.build_filenamev([GLib.get_home_dir(), '.gemini-burn', 'stats.json']);
+            if (GLib.file_test(statsFile, GLib.FileTest.EXISTS)) {
+                const [ok, contents] = GLib.file_get_contents(statsFile);
                 if (ok) {
                     const decoder = new TextDecoder('utf-8');
                     return JSON.parse(decoder.decode(contents));
