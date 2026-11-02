@@ -277,17 +277,29 @@ def collect_metrics() -> Dict[str, Any]:
             "is_today": is_today
         })
 
-    # Métricas da Semana (Soma dos últimos 7 dias para consistência visual com o histórico)
-    w_reqs = sum(day["reqs"] for day in last_7_days)
-    w_total = sum(day["tokens"] for day in last_7_days)
+    # Métricas da Semana Calendário (Inicia na Segunda-feira às 00:00:00 até o momento atual)
+    start_of_week_date = (now_local - timedelta(days=now_local.weekday())).date()
+    w_reqs = 0
+    w_total = 0
+    for d_str, d_val in daily_map.items():
+        try:
+            d_obj = datetime.strptime(d_str, "%Y-%m-%d").date()
+            if start_of_week_date <= d_obj <= now_local.date():
+                w_reqs += d_val["reqs"]
+                w_total += (d_val["tokens_in"] + d_val["tokens_out"])
+        except Exception:
+            pass
 
-    # Determina velocidade / ritmo e rótulo de queima em harmonia com as cores do widget
-    if daily_pct >= 70 or reqs_last_hour > 60:
+    # Harmonia total de rótulo e cor (Apple HIG):
+    # - < 50% (Verde): Ativo ⚡ (ou Ocioso 💤 se sem atividade recente)
+    # - 50% a 69% (Amarelo): Moderado ⚡
+    # - >= 70% (Vermelho): Fervendo 🔥
+    if daily_pct >= 70:
         pace_label = "Fervendo 🔥"
         pace_class = "fire"
-    elif daily_pct >= 50 or reqs_last_hour > 25:
-        pace_label = "Acelerado ⚡"
-        pace_class = "active"
+    elif daily_pct >= 50:
+        pace_label = "Moderado ⚡"
+        pace_class = "moderate"
     elif reqs_last_hour > 0:
         pace_label = "Ativo ⚡"
         pace_class = "active"
