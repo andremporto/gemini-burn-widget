@@ -112,6 +112,34 @@ systemctl --user stop gemini-burn.service
 
 ---
 
+## 🤝 Como Contribuir
+
+Contribuições da comunidade são super bem-vindas! Se você deseja reportar um bug, sugerir novas métricas ou enviar melhorias de código:
+
+1. Faça um **Fork** do projeto.
+2. Crie uma branch para sua modificação (`git checkout -b feature/minha-melhoria`).
+3. Faça o commit das suas alterações (`git commit -m 'feat: adiciona nova funcionalidade'`).
+4. Envie para o seu fork (`git push origin feature/minha-melhoria`).
+5. Abra um **Pull Request**.
+
+Para instruções detalhadas de como configurar o ambiente de desenvolvimento local, testar a extensão no GNOME Shell e acompanhar logs, consulte nosso [Guia de Contribuição (CONTRIBUTING.md)](CONTRIBUTING.md).
+
+---
+
+## ☕ Apoie o Projeto
+
+Se o **Gemini Burn** te ajuda no seu fluxo de desenvolvimento e você deseja apoiar a continuidade do projeto, considere me pagar um cafézinho! ☕
+
+<p align="left">
+  <img src="https://img.shields.io/badge/PIX-Apoiar%20via%20PIX-32BCAD?style=for-the-badge&logo=pix&logoColor=white" alt="Apoie via Pix" />
+</p>
+
+> **Chave PIX (Aleatória):**  
+> `883e07ea-968b-44eb-ba00-4ee5cef1221d`  
+> *(Qualquer quantia é muito bem-vinda e ajuda a manter novos recursos saindo do forno! 🔥)*
+
+---
+
 ## 📄 Licença
 
 Distribuído sob a licença [MIT](LICENSE). Desenvolvido para a comunidade open source de desenvolvedores.
