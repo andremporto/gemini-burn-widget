@@ -114,4 +114,4 @@ systemctl --user stop gemini-burn.service
 
 ## 📄 Licença
 
-Distribuído sob a licença [MIT](LICENSE). Desenvolvido para a comunidade open source de desenvolvedores com IA.
+Distribuído sob a licença [MIT](LICENSE). Desenvolvido para a comunidade open source de desenvolvedores.
