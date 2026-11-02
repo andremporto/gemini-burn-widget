@@ -24,16 +24,18 @@
   - Fundo geral translúcido em `#2f2f2f` com efeito *glassmorphism* e *backdrop blur*.
   - Cards internos em preto obsidiana `#151515` com cantos contínuos (*squircles* com `border-radius: 20px`) e micro-bordas de iluminação especular.
   - Tipografia limpa com espaçamento óptico (*optical tracking*).
-- 🚦 **Cores Dinâmicas Inteligentes (Apple HIG System Colors):**
-  - 🟢 **0% a 49% (Apple System Green `#30D158`):** Consumo seguro e ritmo tranquilo.
-  - 🟡 **50% a 69% (Apple System Yellow `#FFD60A`):** Atenção moderada, metade da cota diária atingida.
-  - 🔴 **70% em diante (Apple System Red `#FF453A`):** Ritmo intenso de queima ("Fervendo") e aproximação da meta diária.
+- 🚦 **Cores Dinâmicas e Rótulos Inteligentes (Apple HIG):**
+  - 🟢 **0% a 49% • `Ativo ⚡` (Apple System Green `#30D158`):** Consumo seguro, ritmo estável e interface em verde.
+  - 🟡 **50% a 69% • `Moderado ⚡` (Apple System Yellow `#FFD60A`):** Alerta preventivo ao ultrapassar a metade da cota diária.
+  - 🔴 **70% em diante • `Fervendo 🔥` (Apple System Red `#FF453A`):** Ritmo intenso de queima e aproximação do limite diário.
+  - 🎯 **Harmonia Visual Absoluta:** O rótulo de status, a barra de progresso, a velocidade horária (`req/h`) e a porcentagem mudam em perfeita sincronia visual.
 - ⚡ **Rastreamento Automático Local (Zero Configuração):**
   - Analisa diretamente os logs locais do Antigravity IDE (`~/.gemini/antigravity-ide/brain/`).
   - Não requer chaves de API para monitorar seu fluxo do Antigravity.
   - Mapeia tokens de entrada (contexto acumulado) e saída (raciocínio/geração).
 - 📈 **Métricas de Ritmo & Histórico:**
-  - **Burn Rate Horário:** Medição em tempo real de requisições e tokens consumidos por hora.
+  - **Semana de Calendário:** Contabilização semanal acumulada iniciando na segunda-feira às 00:00:00.
+  - **Burn Rate Horário:** Medição contínua em tempo real de requisições e tokens consumidos por hora.
   - **Histórico dos 7 Dias:** Mini gráfico de barras com pico de requisições e destaque inteligente no dia de hoje.
   - **Contador de Ferramentas:** Registro das *tools* e comandos executados pelos agentes.
 - 🎛️ **Multi-Modos de Exibição:**
