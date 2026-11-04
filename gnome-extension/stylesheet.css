@@ -16,23 +16,28 @@
 .gemini-burn-menu {
   min-width: 340px;
   max-width: 360px;
-  padding: 8px;
+  padding: 10px;
   background-color: rgba(47, 47, 47, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 24px;
 }
 
 .popup-menu-item.gemini-burn-menu-item {
-  padding: 2px 2px;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
+.popup-menu-item.gemini-burn-menu-item:last-child {
+  margin-bottom: 0;
 }
 
 /* Cards Internos #151515 (Squircle Apple Widgets) */
 .gemini-burn-card {
   background-color: #151515;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border-radius: 18px;
   padding: 14px 16px;
-  margin: 4px 2px;
+  margin: 0;
   spacing: 10px;
 }
 
@@ -124,11 +129,18 @@
 }
 
 /* Grid de Mini Cards Duplos (#151515) */
+.gemini-burn-grid-container {
+  spacing: 8px;
+  margin: 0;
+  padding: 0;
+}
+
 .gemini-burn-grid-card {
   background-color: #151515;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
   padding: 12px 14px;
+  margin: 0;
   spacing: 4px;
 }
 

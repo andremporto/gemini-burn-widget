@@ -275,7 +275,12 @@ const GeminiBurnIndicator = GObject.registerClass({
             can_focus: false,
             style_class: 'gemini-burn-menu-item'
         });
-        const gridContainer = new St.BoxLayout({ vertical: false, x_expand: true });
+        const gridContainer = new St.BoxLayout({
+            vertical: false,
+            x_expand: true,
+            style_class: 'gemini-burn-grid-container',
+            style: 'spacing: 8px;'
+        });
 
         const cardWeek = new St.BoxLayout({ vertical: true, x_expand: true, style_class: 'gemini-burn-grid-card' });
         cardWeek.add_child(new St.Label({ text: 'SEMANA ATUAL', style_class: 'gemini-burn-label-muted' }));
