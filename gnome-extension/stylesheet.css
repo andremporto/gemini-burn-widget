@@ -51,18 +51,23 @@
 
 /* Badges e Pílulas Estilo Apple (Stocks / Status) */
 .gemini-burn-badge {
+  font-size: 9px;
+  font-weight: 600;
   color: #30d158;
   background-color: rgba(48, 209, 88, 0.08);
   border: 1px solid rgba(48, 209, 88, 0.20);
-  border-radius: 8px;
-  padding: 2px 7px;
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-right: 2px;
+  height: 16px;
 }
 
 .gemini-burn-badge-label {
   font-size: 9px;
   font-weight: 600;
   color: #30d158;
-  letter-spacing: 0.1px;
 }
 
 .gemini-burn-badge.fire {
