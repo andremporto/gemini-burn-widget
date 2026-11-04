@@ -325,15 +325,26 @@ const GeminiBurnIndicator = GObject.registerClass({
         });
         const sessionBox = new St.BoxLayout({ vertical: false, x_expand: true, y_align: Clutter.ActorAlign.CENTER, style_class: 'gemini-burn-card' });
 
-        const sessLeft = new St.BoxLayout({ vertical: true, x_expand: true });
+        const sessLeft = new St.BoxLayout({ vertical: true, x_expand: true, y_align: Clutter.ActorAlign.CENTER });
         this._uiSessionModel = new St.Label({ text: '● Gemini 3', style_class: 'gemini-burn-title' });
         this._uiSessionConv = new St.Label({ text: 'ID: idle', style_class: 'gemini-burn-subtext' });
         sessLeft.add_child(this._uiSessionModel);
         sessLeft.add_child(this._uiSessionConv);
         sessionBox.add_child(sessLeft);
 
-        const sessBadge = new St.Label({ text: 'Antigravity IDE', style_class: 'gemini-burn-badge' });
-        sessionBox.add_child(sessBadge);
+        const sessBadgeBin = new St.Bin({
+            style_class: 'gemini-burn-badge',
+            y_align: Clutter.ActorAlign.CENTER,
+            x_align: Clutter.ActorAlign.END
+        });
+        const sessBadgeLabel = new St.Label({
+            text: 'Antigravity IDE',
+            style_class: 'gemini-burn-badge-label',
+            y_align: Clutter.ActorAlign.CENTER,
+            x_align: Clutter.ActorAlign.CENTER
+        });
+        sessBadgeBin.set_child(sessBadgeLabel);
+        sessionBox.add_child(sessBadgeBin);
 
         sessionItem.add_child(sessionBox);
         this.menu.addMenuItem(sessionItem);
