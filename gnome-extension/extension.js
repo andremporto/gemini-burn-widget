@@ -178,7 +178,11 @@ const GeminiBurnIndicator = GObject.registerClass({
             can_focus: false,
             style_class: 'gemini-burn-menu-item'
         });
-        const headerBox = new St.BoxLayout({ x_expand: true, y_align: Clutter.ActorAlign.CENTER });
+        const headerBox = new St.BoxLayout({
+            x_expand: true,
+            y_align: Clutter.ActorAlign.CENTER,
+            style_class: 'gemini-burn-header-box'
+        });
 
         const brandBox = new St.BoxLayout({ vertical: true, x_expand: true });
         const titleLabel = new St.Label({ text: '🔥 GEMINI BURN', style_class: 'gemini-burn-title' });
@@ -279,7 +283,7 @@ const GeminiBurnIndicator = GObject.registerClass({
             vertical: false,
             x_expand: true,
             style_class: 'gemini-burn-grid-container',
-            style: 'spacing: 8px;'
+            style: 'spacing: 10px;'
         });
 
         const cardWeek = new St.BoxLayout({ vertical: true, x_expand: true, style_class: 'gemini-burn-grid-card' });
