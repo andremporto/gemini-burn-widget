@@ -334,7 +334,7 @@ const GeminiBurnIndicator = GObject.registerClass({
 
         const sessBadgeBox = new St.BoxLayout({
             style_class: 'gemini-burn-badge',
-            y_align: Clutter.ActorAlign.FILL,
+            y_align: Clutter.ActorAlign.CENTER,
             x_align: Clutter.ActorAlign.END
         });
         const sessBadgeLabel = new St.Label({
