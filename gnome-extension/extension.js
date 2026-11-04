@@ -172,7 +172,7 @@ const GeminiBurnIndicator = GObject.registerClass({
     _buildMenu() {
         this.menu.removeAll();
 
-        // 1. Cabeçalho Estilizado
+        // 1. Cabeçalho Estilizado com Botão de Atualizar Apple
         const headerItem = new PopupMenu.PopupBaseMenuItem({
             reactive: false,
             can_focus: false,
@@ -186,6 +186,26 @@ const GeminiBurnIndicator = GObject.registerClass({
         brandBox.add_child(titleLabel);
         brandBox.add_child(subLabel);
         headerBox.add_child(brandBox);
+
+        // Botão Ícone de Atualizar Discreto no Canto Superior Direito (Apple Style)
+        const btnRefresh = new St.Button({
+            style_class: 'gemini-burn-btn-apple-refresh',
+            reactive: true,
+            can_focus: true,
+            track_hover: true,
+            y_align: Clutter.ActorAlign.CENTER,
+            x_align: Clutter.ActorAlign.END
+        });
+        const refreshIcon = new St.Icon({
+            icon_name: 'view-refresh-symbolic',
+            icon_size: 13,
+            style_class: 'gemini-burn-refresh-icon'
+        });
+        btnRefresh.set_child(refreshIcon);
+        btnRefresh.connect('clicked', () => {
+            this._runParserAsync();
+        });
+        headerBox.add_child(btnRefresh);
 
         headerItem.add_child(headerBox);
         this.menu.addMenuItem(headerItem);
@@ -317,59 +337,6 @@ const GeminiBurnIndicator = GObject.registerClass({
 
         sessionItem.add_child(sessionBox);
         this.menu.addMenuItem(sessionItem);
-
-        // 6. Botões de Ação na Base
-        const actionsItem = new PopupMenu.PopupBaseMenuItem({
-            reactive: false,
-            can_focus: false,
-            style_class: 'gemini-burn-menu-item'
-        });
-        const actionsBox = new St.BoxLayout({ x_expand: true, y_align: Clutter.ActorAlign.CENTER });
-        actionsBox.set_x_align(Clutter.ActorAlign.CENTER);
-
-        // Botão Atualizar
-        const btnRefresh = new St.Button({
-            label: '🔄 Atualizar',
-            style_class: 'gemini-burn-btn-round',
-            reactive: true
-        });
-        btnRefresh.connect('clicked', () => {
-            this._runParserAsync();
-        });
-        actionsBox.add_child(btnRefresh);
-
-        // Botão Painel Web
-        const btnWeb = new St.Button({
-            label: '🌐 Web (5678)',
-            style_class: 'gemini-burn-btn-round',
-            reactive: true,
-            style: 'margin-left: 8px;'
-        });
-        btnWeb.connect('clicked', () => {
-            this.menu.close();
-            try {
-                Gio.AppInfo.launch_default_for_uri('http://127.0.0.1:5678/', null);
-            } catch (e) {}
-        });
-        actionsBox.add_child(btnWeb);
-
-        // Botão Janela Flutuante Desacoplada
-        const btnFloat = new St.Button({
-            label: '🪟 Flutuante',
-            style_class: 'gemini-burn-btn-round',
-            reactive: true,
-            style: 'margin-left: 8px;'
-        });
-        btnFloat.connect('clicked', () => {
-            this.menu.close();
-            try {
-                GLib.spawn_command_line_async(`/usr/bin/python3 ${REPO_DIR}/main.py --toggle`);
-            } catch (e) {}
-        });
-        actionsBox.add_child(btnFloat);
-
-        actionsItem.add_child(actionsBox);
-        this.menu.addMenuItem(actionsItem);
     }
 
     _updateMenuValues() {

@@ -143,8 +143,13 @@ def parse_transcript_file(file_path: str, chars_per_tok: float = 4.0):
                             if latest_event_dt is None or dt_local > latest_event_dt:
                                 latest_event_dt = dt_local
 
-                            in_tokens = int(accumulated_chars / chars_per_tok)
-                            out_tokens = int(c_len / chars_per_tok)
+                            # Se o log já contém tokens exatos reportados pelo Antigravity, usa-os
+                            if "input_tokens" in row and row["input_tokens"] is not None:
+                                in_tokens = int(row.get("input_tokens") or 0)
+                                out_tokens = int(row.get("output_tokens") or 0)
+                            else:
+                                in_tokens = int(accumulated_chars / chars_per_tok)
+                                out_tokens = int(c_len / chars_per_tok)
 
                             events.append({
                                 "dt": dt_local,
@@ -177,12 +182,32 @@ def collect_metrics() -> Dict[str, Any]:
     chars_per_tok = float(config.get("chars_per_token", 4.0))
     daily_req_limit = int(config.get("daily_request_limit", 500))
 
-    brain_dir = os.path.expanduser("~/.gemini/antigravity-ide/brain")
-    transcripts = glob.glob(os.path.join(brain_dir, "*", ".system_generated", "logs", "transcript_full.jsonl"))
-    
-    # Se transcript_full não existir em algum diretório, busca transcript.jsonl
-    if not transcripts:
-        transcripts = glob.glob(os.path.join(brain_dir, "*", ".system_generated", "logs", "transcript.jsonl"))
+    # 1. Localizar todos os diretórios brain do Antigravity (~/.gemini/*/brain)
+    brain_dirs = glob.glob(os.path.expanduser("~/.gemini/*/brain"))
+    for fallback_path in [
+        os.path.expanduser("~/.gemini/antigravity/brain"),
+        os.path.expanduser("~/.gemini/antigravity-ide/brain"),
+    ]:
+        if os.path.exists(fallback_path) and fallback_path not in brain_dirs:
+            brain_dirs.append(fallback_path)
+
+    # Mapear as conversas ativas/arquivadas unificadas
+    conv_map: Dict[str, str] = {}
+    for b_dir in brain_dirs:
+        for conv_path in glob.glob(os.path.join(b_dir, "*")):
+            if not os.path.isdir(conv_path):
+                continue
+            conv_id = os.path.basename(conv_path)
+            logs_dir = os.path.join(conv_path, ".system_generated", "logs")
+            if not os.path.exists(logs_dir):
+                continue
+            tf = os.path.join(logs_dir, "transcript_full.jsonl")
+            t = os.path.join(logs_dir, "transcript.jsonl")
+            target_file = tf if os.path.exists(tf) else (t if os.path.exists(t) else None)
+            if target_file:
+                # Se já vimos esse conv_id em outro diretório, mantém o arquivo com mtime mais recente
+                if conv_id not in conv_map or os.path.getmtime(target_file) > os.path.getmtime(conv_map[conv_id]):
+                    conv_map[conv_id] = target_file
 
     daily_map = {}
     weekly_map = {}
@@ -196,9 +221,8 @@ def collect_metrics() -> Dict[str, Any]:
     reqs_last_hour = 0
     tokens_last_hour = 0
 
-    # 1. Processar dados do Antigravity IDE
-    for t_file in transcripts:
-        conv_id = t_file.split(os.sep)[-4]
+    # Processar dados de cada conversa
+    for conv_id, t_file in conv_map.items():
         parsed = parse_transcript_file(t_file, chars_per_tok=chars_per_tok)
         
         total_tools += parsed["tools_count"]

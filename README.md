@@ -5,8 +5,12 @@
 </p>
 
 <p align="center">
-  <b>Monitor de consumo de requisições, tokens e taxa de queima do Gemini e Antigravity IDE para Linux.</b><br>
-  Construído com a estética refinada dos <b>Apple Widgets</b> (macOS Sonoma / iOS), efeito glassmorphism e integração nativa com o <b>GNOME Shell</b>.
+  <b>English</b> · <a href="README.pt-BR.md">Português (BR)</a> · <a href="README.es.md">Español</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.ru.md">Русский</a>
+</p>
+
+<p align="center">
+  <b>Real-time request, token burn rate, and quota monitor for Gemini and Antigravity on Linux.</b><br>
+  Built with the refined aesthetic of <b>Apple Widgets</b> (macOS Sonoma / iOS), glassmorphism effects, and native <b>GNOME Shell</b> integration.
 </p>
 
 <p align="center">
@@ -18,130 +22,136 @@
 
 ---
 
-## ✨ Destaques e Funcionalidades
+## ✨ Features & Highlights
 
-- 🍏 **Design Inspirado nos Widgets da Apple:** 
-  - Fundo geral translúcido em `#2f2f2f` com efeito *glassmorphism* e *backdrop blur*.
-  - Cards internos em preto obsidiana `#151515` com cantos contínuos (*squircles* com `border-radius: 20px`) e micro-bordas de iluminação especular.
-  - Tipografia limpa com espaçamento óptico (*optical tracking*).
-- 🚦 **Cores Dinâmicas e Rótulos Inteligentes (Apple HIG):**
-  - 🟢 **0% a 49% • `Ativo ⚡` (Apple System Green `#30D158`):** Consumo seguro, ritmo estável e interface em verde.
-  - 🟡 **50% a 69% • `Moderado ⚡` (Apple System Yellow `#FFD60A`):** Alerta preventivo ao ultrapassar a metade da cota diária.
-  - 🔴 **70% em diante • `Fervendo 🔥` (Apple System Red `#FF453A`):** Ritmo intenso de queima e aproximação do limite diário.
-  - 🎯 **Harmonia Visual Absoluta:** O rótulo de status, a barra de progresso, a velocidade horária (`req/h`) e a porcentagem mudam em perfeita sincronia visual.
-- ⚡ **Rastreamento Automático Local (Zero Configuração):**
-  - Analisa diretamente os logs locais do Antigravity IDE (`~/.gemini/antigravity-ide/brain/`).
-  - Não requer chaves de API para monitorar seu fluxo do Antigravity.
-  - Mapeia tokens de entrada (contexto acumulado) e saída (raciocínio/geração).
-- 📈 **Métricas de Ritmo & Histórico:**
-  - **Semana de Calendário:** Contabilização semanal acumulada iniciando na segunda-feira às 00:00:00.
-  - **Burn Rate Horário:** Medição contínua em tempo real de requisições e tokens consumidos por hora.
-  - **Histórico dos 7 Dias:** Mini gráfico de barras com pico de requisições e destaque inteligente no dia de hoje.
-  - **Contador de Ferramentas:** Registro das *tools* e comandos executados pelos agentes.
-- 🎛️ **Multi-Modos de Exibição:**
-  1. **Menu na Barra Superior (Extensão GNOME Shell):** Fica discretamente ao lado do relógio/ícones na bandeja e desce o card completo com 1 clique.
-  2. **Dashboard Web Local:** Acesse em qualquer navegador via `http://127.0.0.1:5678/`.
-  3. **Widget Desktop Flutuante:** Janela independente nativa GTK 4 / WebKitGTK.
-  4. **Painel CLI no Terminal:** Interface de console em tempo real estilo `htop`/`btop`.
+- 🍏 **Apple Widget Inspired Design:** 
+  - Translucent `#2f2f2f` base container with frosted *glassmorphism* and *backdrop blur*.
+  - Obsidian black internal cards (`#151515`) featuring continuous smooth corners (*squircles* with `border-radius: 20px`) and specular micro-lighting inner rings.
+  - Clean typography with natural optical character tracking.
+- 🚦 **Dynamic System Colors & Smart Status (Apple HIG):**
+  - 🟢 **0% to 49% • `Active ⚡` (Apple System Green `#30D158`):** Safe consumption zone, relaxed pace, sleek green accent.
+  - 🟡 **50% to 69% • `Moderate ⚡` (Apple System Yellow `#FFD60A`):** Cautionary heads-up after crossing half the daily allowance.
+  - 🔴 **70%+ • `Blazing 🔥` (Apple System Red `#FF453A`):** High burn velocity approaching daily limits.
+  - 🎯 **Full Visual Harmony:** Status badge, progress bar, hourly velocity (`req/h`), and percentages update in perfect synchrony.
+- ⚡ **Zero-Config Local Auto-Tracking:**
+  - Directly analyzes local Antigravity session logs (`~/.gemini/antigravity/brain/` and `~/.gemini/antigravity-ide/brain/`).
+  - No API keys needed to track your Antigravity workflow.
+  - Captures real input/output tokens or performs accurate context-based estimation.
+- 📈 **Velocity Metrics & History:**
+  - **Calendar Week:** Cumulative weekly tracking starting every Monday at 00:00:00.
+  - **Hourly Burn Rate:** Continuous real-time measurement of requests and tokens burned per hour.
+  - **7-Day Sparkline:** Mini bar chart showing historical request peaks with a smart highlight on today.
+  - **Tool Call Counter:** Tracks total agent function executions and background commands.
+- 🎛️ **Multi-Display Modes:**
+  1. **Top Bar Panel (GNOME Shell Extension):** Sits discreetly next to your system tray icons and reveals the full widget on click.
+  2. **Local Web Dashboard:** Accessible in any modern browser via `http://127.0.0.1:5678/`.
+  3. **Floating Desktop Widget:** Standalone native GTK 4 / WebKitGTK draggable window.
+  4. **Terminal CLI Dashboard:** Live interactive console interface akin to `htop`/`btop`.
 
 ---
 
-## 🚀 Instalação Rápida (1 Comando)
+## 🚀 Quick Install (Single Command)
 
-Você pode instalar o Gemini Burn diretamente pelo terminal com um único comando (não requer `sudo`):
+Install Gemini Burn directly through your terminal with one command (no `sudo` required):
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/andreporto/gemini-burn-widget/main/install.sh | bash
 ```
 
-### O que o instalador faz automaticamente:
-1. Instala a extensão nativa do GNOME Shell em `~/.local/share/gnome-shell/extensions/gemini-burn@andreporto/`.
-2. Cria e ativa o serviço em segundo plano no `systemd --user` (inicia sozinho ao ligar o PC).
-3. Cria o atalho no menu de aplicativos do sistema.
+### What the installer handles automatically:
+1. Installs the native GNOME Shell extension into `~/.local/share/gnome-shell/extensions/gemini-burn@andreporto/`.
+2. Creates and enables the background service in `systemd --user` (starts automatically on system boot).
+3. Adds a desktop launcher to your applications menu.
 
-> **Nota para o GNOME Shell:** Se for a primeira vez instalando uma extensão no GNOME sob Wayland, faça **Log out / Log in** (Encerrar Sessão) no seu usuário para o GNOME carregar a extensão na barra superior.
+> [!IMPORTANT]
+> ### ⚠️ Notice for Wayland Users (Zorin OS, Ubuntu, Fedora)
+> Under **Wayland** (the default on modern GNOME 45+ distributions), the GNOME Shell process acts directly as the display compositor. For system stability reasons, GNOME **disallows runtime shell restarts** (the legacy X11 `Alt + F2` followed by `r` shortcut does not work in Wayland).
+>
+> **What this means:**
+> - When installing the extension for the first time or updating visual code (`extension.js` or `stylesheet.css`), GNOME keeps the previously loaded JavaScript cached in RAM during the active session.
+> - **Workaround:** Simply **Log Out** and log back into your user session (or restart your PC). Upon logging back in, GNOME Shell will cleanly load the updated files from disk.
 
 ---
 
-## 🛠️ Instalação Manual via Git
+## 🛠️ Manual Installation via Git
 
-Caso prefira inspecionar e rodar o repositório clonado localmente:
+If you prefer to inspect and run from a local git clone:
 
 ```bash
-# 1. Clonar o repositório
+# 1. Clone the repository
 git clone https://github.com/andreporto/gemini-burn-widget.git
 cd gemini-burn-widget
 
-# 2. Executar o instalador local
+# 2. Run the local installer
 ./install.sh
 ```
 
 ---
 
-## 🖥️ Modos de Uso
+## 🖥️ Usage Modes
 
-| Modo | Comando | Descrição |
+| Mode | Command | Description |
 | :--- | :--- | :--- |
-| **Barra Superior** | Clique no ícone `🔥` na barra | Menu popup nativo com métricas ao vivo |
-| **Painel Web** | `./main.py --web` | Abre o servidor local em `http://127.0.0.1:5678/` |
-| **Widget Flutuante** | `./main.py --widget` | Janela de desktop arrastável |
-| **Terminal (CLI)** | `./main.py --cli` | Dashboard interativo no terminal |
+| **Top Bar** | Click the `🔥` icon in the panel | Native popup card with real-time stats |
+| **Web Dashboard** | `./main.py --web` | Opens local web server at `http://127.0.0.1:5678/` |
+| **Floating Widget** | `./main.py --widget` | Draggable desktop glass window |
+| **Terminal (CLI)** | `./main.py --cli` | Live interactive terminal dashboard |
 
 ---
 
-## ⚙️ Gerenciamento do Serviço (Systemd)
+## ⚙️ Service Management (Systemd)
 
-O serviço roda em segundo plano sem privilégios de root:
+The collector daemon runs purely in user space without root permissions:
 
 ```bash
-# Verificar status do coletor de métricas
+# Check metrics collector status
 systemctl --user status gemini-burn.service
 
-# Reiniciar o serviço
+# Restart the service
 systemctl --user restart gemini-burn.service
 
-# Parar o serviço
+# Stop the service
 systemctl --user stop gemini-burn.service
 ```
 
 ---
 
-## 🔒 Privacidade e Segurança
+## 🔒 Privacy & Security
 
-- **100% Local e Offline:** Nenhum dado, prompt, token ou histórico sai da sua máquina.
-- **Leitura Segura:** Apenas faz leitura passiva das estatísticas geradas pelo seu fluxo de trabalho no Antigravity.
-- **Banco de Dados Local:** Configurações e métricas avulsas são armazenadas em `~/.gemini-burn/`.
-
----
-
-## 🤝 Como Contribuir
-
-Contribuições da comunidade são super bem-vindas! Se você deseja reportar um bug, sugerir novas métricas ou enviar melhorias de código:
-
-1. Faça um **Fork** do projeto.
-2. Crie uma branch para sua modificação (`git checkout -b feature/minha-melhoria`).
-3. Faça o commit das suas alterações (`git commit -m 'feat: adiciona nova funcionalidade'`).
-4. Envie para o seu fork (`git push origin feature/minha-melhoria`).
-5. Abra um **Pull Request**.
-
-Para instruções detalhadas de como configurar o ambiente de desenvolvimento local, testar a extensão no GNOME Shell e acompanhar logs, consulte nosso [Guia de Contribuição (CONTRIBUTING.md)](CONTRIBUTING.md).
+- **100% Local & Offline:** No prompt content, code, tokens, or history ever leaves your machine.
+- **Passive Read-Only:** Only performs passive local parsing of metrics produced by your Antigravity workflow.
+- **Local Storage:** Configuration and manual API calls are persisted locally in `~/.gemini-burn/`.
 
 ---
 
-## ☕ Apoie o Projeto
+## 🤝 Contributing
 
-Se o **Gemini Burn** te ajuda no seu fluxo de desenvolvimento e você deseja apoiar a continuidade do projeto, considere me pagar um cafézinho! ☕
+Contributions from the open-source community are warmly welcome! If you want to report a bug, suggest metrics, or submit PRs:
+
+1. **Fork** the repository.
+2. Create a feature branch (`git checkout -b feature/my-new-feature`).
+3. Commit your changes (`git commit -m 'feat: add custom daily token threshold'`).
+4. Push to your branch (`git push origin feature/my-new-feature`).
+5. Open a **Pull Request**.
+
+For detailed setup instructions, GNOME extension development tips, and log tracing, check our [Contribution Guide (CONTRIBUTING.md)](CONTRIBUTING.md).
+
+---
+
+## ☕ Support the Project
+
+If **Gemini Burn** helps supercharge your daily workflow and you'd like to support continued development, consider buying me a coffee! ☕
 
 <p align="left">
-  <img src="https://img.shields.io/badge/PIX-Apoiar%20via%20PIX-32BCAD?style=for-the-badge&logo=pix&logoColor=white" alt="Apoie via Pix" />
+  <img src="https://img.shields.io/badge/PIX-Support%20via%20PIX-32BCAD?style=for-the-badge&logo=pix&logoColor=white" alt="Support via Pix" />
 </p>
 
-> **Chave PIX (Aleatória):**  
+> **PIX Key (Random):**  
 > `883e07ea-968b-44eb-ba00-4ee5cef1221d`  
-> *(Qualquer quantia é muito bem-vinda e ajuda a manter novos recursos saindo do forno! 🔥)*
+> *(Any amount is deeply appreciated and fuels upcoming features! 🔥)*
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Distribuído sob a licença [MIT](LICENSE). Desenvolvido para a comunidade open source de desenvolvedores.
+Distributed under the [MIT](LICENSE) License. Built for the open-source developer community.
